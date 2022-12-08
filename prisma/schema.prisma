@@ -1,0 +1,42 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Context {
+  id            String      @default(cuid()) @id
+  name          String  
+  deleted       Boolean     @default(false)
+  tomato        Tomato[]
+}
+
+model Tomato {
+  id            String      @default(cuid()) @id
+  description   String
+  deleted       Boolean     @default(false)
+  context       Context     @relation(fields: [contextId], references: [id])
+  contextId     String
+  author        User        @relation(fields: [authorId], references: [id])
+  authorId      String
+}
+
+model User {
+  id            String      @default(cuid()) @id
+  sub           String?
+  nickname      String?
+  name          String
+  picture       String?
+  email         String      @unique
+  createdAt     DateTime    @default(now()) @map(name: "created_at")
+  deleted       Boolean     @default(false)
+  emailVerified Boolean     @default(false)
+  updatedAt     DateTime    @updatedAt @map(name: "updated_at")
+  tomatoes      Tomato[]
+}
