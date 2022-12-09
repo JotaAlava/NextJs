@@ -8,33 +8,33 @@ const Header: React.FC = () => {
     router.pathname === pathname;
 
   let left = (
-    <div className="left">
-      <Link href="/">
-        <a className="bold" data-active={isActive("/")}>
-          Feed
-        </a>
-      </Link>
-      <style jsx>{`
-        .bold {
-          font-weight: bold;
-        }
+		<div className="left">
+			<Link href="/" legacyBehavior>
+				<a className="bold" data-active={isActive('/')}>
+					Feed
+				</a>
+			</Link>
+			<style jsx>{`
+				.bold {
+					font-weight: bold;
+				}
 
-        a {
-          text-decoration: none;
-          color: #000;
-          display: inline-block;
-        }
+				a {
+					text-decoration: none;
+					color: #000;
+					display: inline-block;
+				}
 
-        .left a[data-active="true"] {
-          color: gray;
-        }
+				.left a[data-active='true'] {
+					color: gray;
+				}
 
-        a + a {
-          margin-left: 1rem;
-        }
-      `}</style>
-    </div>
-  );
+				a + a {
+					margin-left: 1rem;
+				}
+			`}</style>
+		</div>
+	);
 
   let right = null;
 

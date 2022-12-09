@@ -3,6 +3,9 @@ import { GetStaticProps } from 'next';
 import Layout from '../components/Layout';
 import Post, { PostProps } from '../components/Post';
 import { PrismaClient, User } from '@prisma/client';
+import { Login } from '../components/Login';
+import { useUser } from '@auth0/nextjs-auth0/client';
+import Logout from '../components/Logout';
 const prisma = new PrismaClient();
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -14,7 +17,7 @@ export const getStaticProps: GetStaticProps = async () => {
 			updatedAt: user.updatedAt.toString()
 		};
 	});
-	console.log(users);
+
 	const feed = [
 		{
 			id: '1',
@@ -43,10 +46,14 @@ type Props = {
 };
 
 const Blog: React.FC<Props> = (props) => {
+	const { user, error, isLoading } = useUser();
+
 	return (
 		<Layout>
 			<div className="page">
 				<h1>Public Feed</h1>
+				{user ? `${JSON.stringify(user)}` : <Login></Login>}
+				<Logout></Logout>
 				<main>
 					{JSON.stringify(props.users)}
 					{props.feed.map((post) => (
